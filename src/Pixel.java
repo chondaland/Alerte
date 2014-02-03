@@ -4,7 +4,7 @@ public class Pixel {
 	private double B;
 	private double NDVI;
 	private double IR;
-	private int numgroupe;
+	private int numgroupe = -1;
 	
 	public Pixel(double R, double B, double NDVI, double IR){
 		this.R=R;
