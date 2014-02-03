@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 
-public class Pixel {
+public class Pixel implements Comparable{
 	private double R;
 	private double B;
 	private double NDVI;
@@ -56,13 +57,27 @@ public class Pixel {
 		//pour chaque pixel appartenant à la base d'apprentissage (=bc de photos jor 100, 200)
 		// base d'apprentissage = arraylist contenant tous les pixels de la base d'apprentissage
 		
-		ArrayList tableaudistance = new ArrayList<Pixel>();
 		for(int i=0;i<baseDApprentissage.size-1;i++){
 			baseDApprentissage.get(i).distance(this);
 			
 			
 			//utiliser une fonction qui classe les pixels dans le tableau
 			//en fonction de la distance (ordre croissant)
+			
+//****************** Tentative *****************************************//
+			// ArrayList tableaudistance = new ArrayList<Pixel>();
+			// Collections.sort(tableaudistance);
+			
+			// public int compareTo(Pixel l, Pixel j){ 
+			//    double nombre1 = this.distance(l); 
+			//    double nombre2 = this.distance(j); 
+			//    if (nombre1<nombre2) return -1; 
+			//    else if(nombre1 == nombre2) return 0; 
+			//    else return 1; 
+			// } 
+			
+//***************************************************************************//
+			
 		}
 		
 		int p=0;
