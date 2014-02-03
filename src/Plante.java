@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.ArrayList;
+import java.math.*;
 
-public class Plante {
+ class Plante {
 	
 		private ArrayList plante = new ArrayList<Pixel>();
 		private int k;
@@ -20,9 +20,10 @@ public class Plante {
 			
 		}
 		
-		public void kPPV(){
-			
-		private ArrayList 
+		public void kppvPlante(int k){
+		
+		for(int i=0;i<plante.size()-1;i++){
+			((Pixel) plante.get(i)).kppvPixel(k);    //pk faire du cast ici ?
 		}
-
 	}
+ }

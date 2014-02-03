@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class Pixel {
 	private double R;
@@ -5,6 +7,7 @@ public class Pixel {
 	private double NDVI;
 	private double IR;
 	private int numgroupe;
+	private int numgroupe2;
 	
 	public Pixel(double R, double B, double NDVI, double IR){
 		this.R=R;
@@ -17,8 +20,16 @@ public class Pixel {
 		this.numgroupe=newnum;
 	}
 	
+	public void setGroupe2(int newnum){
+			this.numgroupe2=newnum;
+	}
+	
 	public int getnumGroupe(){
 		return this.numgroupe;
+	}
+		
+	public int getnumGroupe2(){
+			return this.numgroupe2;
 	}
 	
 	public double getR(){
@@ -36,4 +47,31 @@ public class Pixel {
 	public double getIR(){
 		return this.IR;
 	}
+	
+	public double distance(Pixel m){
+		return (this.NDVI-m.getNDVI())/2;  // EXEMPLE DE DISTANCE
+	}
+	
+	public void kppvPixel(int k){
+		//pour chaque pixel appartenant à la base d'apprentissage (=bc de photos jor 100, 200)
+		// base d'apprentissage = arraylist contenant tous les pixels de la base d'apprentissage
+		
+		ArrayList tableaudistance = new ArrayList<Pixel>();
+		for(int i=0;i<baseDApprentissage.size-1;i++){
+			baseDApprentissage.get(i).distance(this);
+			
+			
+			//utiliser une fonction qui classe les pixels dans le tableau
+			//en fonction de la distance (ordre croissant)
+		}
+		
+		int p=0;
+		for(int i=0;i<k-1;i++){
+			p=((Pixel) tableaudistance.get(i)).getnumGroupe2()+p;   //pk du cast ici ?
+		}
+		if(p>0) this.setGroupe2(1);
+		if(p<0) this.setGroupe2(-1);
+		if(p==0) this.kppvPixel(k+1);
+	}
+	
 }
