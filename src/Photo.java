@@ -1,13 +1,23 @@
+import java.util.ArrayList;
+
 
 public class Photo {
-	private ArrayList<Vector(4)>() a; 
+
+	private ArrayList photo = new ArrayList<Pixel>();
+	private int k;
+	private double epsilon;
 	
-	public ArrayList<Vector(4)>() getA(){
-		return this.a;
+	public ArrayList getA(){
+		return this.photo;
 	}
 	
-	public Photo(ArrayList<Vector(4)> a){
-		this.a=a;
+	
+	public Photo(ArrayList<Pixel> photo){
+		this.photo=photo;
+	}
+	
+	public void kmoyenne(){
+		
 	}
 	
 	
