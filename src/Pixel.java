@@ -9,6 +9,7 @@ public class Pixel implements Comparable{
 	private double IR;
 	private int numgroupe;
 	private int numgroupe2;
+	private double distance = 0;
 	
 	public Pixel(double R, double B, double NDVI, double IR){
 		this.R=R;
@@ -23,6 +24,10 @@ public class Pixel implements Comparable{
 	
 	public void setGroupe2(int newnum){
 			this.numgroupe2=newnum;
+			
+	}
+	public void setDistance(double newdistance){
+			this.distance=newdistance;
 	}
 	
 	public int getnumGroupe(){
@@ -30,7 +35,11 @@ public class Pixel implements Comparable{
 	}
 		
 	public int getnumGroupe2(){
-			return this.numgroupe2;
+		return this.numgroupe2;
+	}
+	
+	public double getDistance(){
+		return distance;
 	}
 	
 	public double getR(){
@@ -49,44 +58,46 @@ public class Pixel implements Comparable{
 		return this.IR;
 	}
 	
+	public int compareTo(Object p){	
+		Pixel m = (Pixel) p;
+		if (this.distance<m.getDistance()) return -1; 
+		else if(this.distance == m.getDistance()) return 0; 
+		else return 1;
+	}
+	
 	public double distance(Pixel m){
 		return (this.NDVI-m.getNDVI())/2;  // EXEMPLE DE DISTANCE
 	}
 	
-	public void kppvPixel(int k){
-		//pour chaque pixel appartenant à la base d'apprentissage (=bc de photos jor 100, 200)
-		// base d'apprentissage = arraylist contenant tous les pixels de la base d'apprentissage
+	public int kppvPixel(int k){
 		
-		for(int i=0;i<baseDApprentissage.size-1;i++){
-			baseDApprentissage.get(i).distance(this);
+		//CREATION DUN ARRAYLIST baseDApprentissage QUI SERVIRA D EXEMPLE
+		
+		ArrayList baseDApprentissage = new ArrayList<Pixel>();
 			
+		//pour chaque pixel i appartenant à la base d'apprentissage (=bc de photos jor 100, 200)
+		//on calcule la distance au pixel fixe et on change l'attribut distance du pixel i
+		//base d'apprentissage = arraylist contenant tous les pixels de la base d'apprentissage
+					
+	for(int i=0;i<baseDApprentissage.size-1;i++)
+		baseDApprentissage.get(i).setDistance(baseDApprentissage.get(i).distance(this));
 			
-			//utiliser une fonction qui classe les pixels dans le tableau
-			//en fonction de la distance (ordre croissant)
+		//on doit copier la base d'apprentissage d'abord (car on va trier le tableau)
 			
-//****************** Tentative *****************************************//
-			// ArrayList tableaudistance = new ArrayList<Pixel>();
-			// Collections.sort(tableaudistance);
+		ArrayList<Pixel> baseDApprentissageTest = new ArrayList<Pixel>(baseDApprentissage);
 			
-			// public int compareTo(Pixel l, Pixel j){ 
-			//    double nombre1 = this.distance(l); 
-			//    double nombre2 = this.distance(j); 
-			//    if (nombre1<nombre2) return -1; 
-			//    else if(nombre1 == nombre2) return 0; 
-			//    else return 1; 
-			// } 
+		//on trie les pixels de la base d'apprentissage test avec Collections.sort
 			
-//***************************************************************************//
-			
-		}
+		Collections.sort(baseDApprentissageTest);		
 		
 		int p=0;
 		for(int i=0;i<k-1;i++){
-			p=((Pixel) tableaudistance.get(i)).getnumGroupe2()+p;   //pk du cast ici ?
+			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;   //pk du cast ici ?
 		}
+		
 		if(p>0) this.setGroupe2(1);
 		if(p<0) this.setGroupe2(-1);
 		if(p==0) this.kppvPixel(k+1);
 	}
-	
+
 }
