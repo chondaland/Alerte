@@ -12,8 +12,12 @@ public class Representants {
 		return centroides;
 	}
 	
-	public void add(Pixel p){
-		this.centroides.add(p);
+	public void add(int i,Pixel p){
+		this.centroides.add(i,p);
+	}
+	
+	public void remove(int i){
+		this.centroides.remove(i);
 	}
 	
 	public void set(int i, Pixel p){
@@ -22,9 +26,10 @@ public class Representants {
 	
 	public ArrayList<Double> buildComparison(ArrayList<Pixel> A){
 		ArrayList<Double> comp= new ArrayList<Double>();
-		for(int i=0 ; i<this.centroides.size()-1 ; i++ ){
-			comp.add(i,A.get(i).distance(this.centroides.get(i)));
-		}
+		for(int i=0 ; i<2 ; i++ ){
+			comp.add(i, new Double(A.get(i).distance(this.centroides.get(i))));	
+			System.out.println(A.get(i).distance(this.centroides.get(i)));
+}
 		
 		return comp;
 		
@@ -34,14 +39,15 @@ public class Representants {
 		int indic=-1 ;
 		ArrayList<Double> comp = this.buildComparison(A);
 		
-		for(int i=0;i<=this.centroides.size()-1;i++){
-			if(comp.get(i)>epsilon){
+		for(int i=0;i<this.centroides.size();i++){
+			System.out.println(comp.get(i).doubleValue()>epsilon);
+			if(comp.get(i).doubleValue()>epsilon){
 				indic = indic + 1;
 			}
 		}
 		
 
-		if(indic>0){
+		if(indic>-1){
 			return true;
 		}
 		

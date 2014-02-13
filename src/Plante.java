@@ -12,6 +12,14 @@ public class Plante {
 			return this.H2;
 		}
 		
+		public void setK(int newk){
+			k=newk;
+		}
+		
+		public void setEpsilon(double epsilon){
+			this.epsilon=epsilon;
+		}
+		
 		public ArrayList<ArrayList<Pixel>> getH(){
 			return this.H;
 		}
@@ -26,18 +34,19 @@ public class Plante {
 		}
 		
 		public void kmoyenne(){
-			int nbPixel = plante.size()+1;
+			int nbPixel = plante.size();
 			ArrayList<Integer> random = new ArrayList<Integer>();
 			while(random.size()<k){
-				int m1 = (int)(Math.random() * (nbPixel + 1));
+				int m1 = (int)(Math.random() * (nbPixel));
 				if(random.contains(m1)==false){
 					random.add(m1); 
 				}
 			}
 			
+			
 			ArrayList<Pixel> R1 = new ArrayList<Pixel>(k);
-			for(int i=1;i<k;i++){
-				R1.add(i,this.plante.get((random.get(i)).intValue()));
+			for(int i=0;i<k;i++){
+				R1.add(this.plante.get((random.get(i)).intValue()));
 			}
 			
 			
@@ -53,41 +62,53 @@ public class Plante {
 			
 			int lanceurAlgo = 0;
 			
-			while((lanceurAlgo==0) | (R3.test(R1, epsilon)==false)){
+			for(int j=0 ; j<plante.size(); j++){
+				plante.get(j).setGroupe(0);
+				plante.get(j).setEloignement(plante.get(j).distance(R1.get(0)));
+				
+				
+			}
+			
+			
+			while((lanceurAlgo==0) | (R3.test(R1, epsilon)==true)){
+				System.out.println("boucle");
 				for(int i=0 ; i<k ; i++){
-					R3.set(i, R.get(i)); 
+					R3.remove(i);
+					R3.add(i,R1.get(i)); 
 					}
 				
-				for(int j=0 ; j<plante.size(); j++){
-					plante.get(j).setGroupe(1);
-					plante.get(j).setEloignement(plante.get(j).distance(R.get(0)));
-					
-					
-				}
+				
 				
 				for(int j=0 ; j<plante.size(); j++){
 					for(int u=0 ; u<k ; u++){
-						if(plante.get(j).distance(R.get(u))<plante.get(j).getEloignement()){
-							plante.get(j).setEloignement(plante.get(j).distance(R.get(u)));
+						if(plante.get(j).distance(R1.get(u))<plante.get(j).getEloignement()){
+							plante.get(j).setEloignement(plante.get(j).distance(R1.get(u)));
 							plante.get(j).setGroupe(u);
 						}
 					}
 				}
 				
+				ArrayList<Pixel> a = new ArrayList<Pixel>(k);
+				for(int u=0 ; u<k; u++){
+					H.add(a);
+				}
+				
+				
 				for(int u=0 ; u<k; u++){
 					for(int j=0; j<this.plante.size();j++){
-						if(this.plante.get(j).getnumGroupe()==k){
+						if(this.plante.get(j).getnumGroupe()==u){
 							H.get(u).add(this.plante.get(j));
 						}
 					}
 				}
+				
 				
 				for(int u=0 ; u<k; u++){
 					H2.add(u,new Moyenne(H.get(u)));
 				}
 				
 				for(int u=0 ; u<k; u++){
-					R.set(u, H2.get(u).getCentroide());
+					R1.add(H2.get(u).getCentroide());
 				}
 				
 				lanceurAlgo++;
@@ -96,8 +117,12 @@ public class Plante {
 			
 			
 			
+		System.out.println("results");	
+		for(int j=0 ; j<plante.size(); j++){
+				System.out.println(plante.get(j).getnumGroupe());
+			}
 			
-			
+			System.out.println(R3.test(R1, epsilon));
 			
 			
 			
