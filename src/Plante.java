@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.math.*;
 
-public class Plante {
+ class Plante {
 	
 		private ArrayList<Pixel> plante = new ArrayList<Pixel>();
 		private int k;
@@ -128,9 +129,14 @@ public class Plante {
 			
 		}
 		
-		public void kPPV(){
-			
-		
-		}
 
+		public void kppvPlante(int k){
+		
+		for(int i=0;i<plante.size()-1;i++){
+			((Pixel) plante.get(i)).kppvPixel(k);    //pk faire du cast ici ?
+		}
 	}
+ }
+ 
+ //IL RESTE A DEFINIR UNE FONCTION COMMUNE AUX 2 ALGOS A PRIORI QUI DIT SI, APRES AVOIR TRIE LES PIXELS D UNE PLANTE
+ //,SI ELLE EST MALADE OU NON (choisir un seuil)
