@@ -36,7 +36,7 @@ public class MainTest {
 			for(int i=0; i<100;i++){
 				for(int j=0; j<100;j++){
 					Color c = new Color(newImage.getRGB(i, j));
-					tableau2.add(m, new Pixel(c.getRed(), c.getBlue(), 0 , 0));
+					tableau2.add(m, new Pixel(c.getRed(), c.getBlue(), c.getBlue() , sortieNDVI.getRGB(i, j)));
 					m++;
 				}
 			}
