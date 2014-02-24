@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,7 +25,41 @@ public class MainTest {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
+		
+		try {
+			BufferedImage newImage = ImageIO.read(new File("data/test.jpg"));
+			int m=0;
+			ArrayList<Integer> tableau = new ArrayList<Integer>();
+			for(int i=0; i<100;i++){
+				for(int j=0; j<100;j++){
+					tableau.add(m, newImage.getRGB(i, j));
+					m++;
+				}
+			}
+			
+			//System.out.println("RGB"+ newImage.getRGB(1, 2));
+			
+			ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
+			for(int u=0 ; u<m; u++){
+				int B = ((tableau.get(u)%(255*255)))%255;
+				int R = (1/255)*(tableau.get(u)-B)%(255*255);
+				tableau2.add(u, new Pixel(R,B,0,0));
+			}
+			
+			Plante plant2 = new Plante(tableau2);
+			plant2.setK(2);
+			plant2.setEpsilon(0.0001);
+			
+			plant2.kmoyenne();
+			
+			
+} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
 		
 		
 		
@@ -48,11 +84,11 @@ public class MainTest {
 		a.add(p8);
 		a.add(p9);
 		
-		Plante plant=new Plante(a);
-		plant.setK(2);
-		plant.setEpsilon(0.0001);
+		//Plante plant=new Plante(a);
+		//plant.setK(2);
+		//plant.setEpsilon(0.0001);
 		
-		plant.kmoyenne();
+		//plant.kmoyenne();
 		
 		
 
