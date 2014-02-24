@@ -9,6 +9,10 @@ import java.math.*;
 		private ArrayList<ArrayList<Pixel>> H = new ArrayList<ArrayList<Pixel>>(k);
 		private ArrayList<Moyenne> H2 = new ArrayList<Moyenne>(k);
 
+		public void setPlante(ArrayList<Pixel> newplante){
+			this.plante = newplante;
+		}
+		
 		public ArrayList<Moyenne> getH2(){
 			return this.H2;
 		}
@@ -59,7 +63,7 @@ import java.math.*;
 				R.add(i,R1.get(i)); // initialisation des représentants des groupes
 			}
 						
-			Representants R3 = new Representants(R);
+			Representants R3 = new Representants(R, this.k);
 			
 			int lanceurAlgo = 0;
 			

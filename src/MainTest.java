@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,23 +30,18 @@ public class MainTest {
 		
 		try {
 			BufferedImage newImage = ImageIO.read(new File("data/test.jpg"));
+			BufferedImage sortieNDVI = ImageIO.read(new File("data/test.jpg"));
 			int m=0;
-			ArrayList<Integer> tableau = new ArrayList<Integer>();
+			ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
 			for(int i=0; i<100;i++){
 				for(int j=0; j<100;j++){
-					tableau.add(m, newImage.getRGB(i, j));
+					Color c = new Color(newImage.getRGB(i, j));
+					tableau2.add(m, new Pixel(c.getRed(), c.getBlue(), 0 , 0));
 					m++;
 				}
 			}
 			
-			//System.out.println("RGB"+ newImage.getRGB(1, 2));
-			
-			ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
-			for(int u=0 ; u<m; u++){
-				int B = ((tableau.get(u)%(255*255)))%255;
-				int R = (1/255)*(tableau.get(u)-B)%(255*255);
-				tableau2.add(u, new Pixel(R,B,0,0));
-			}
+
 			
 			Plante plant2 = new Plante(tableau2);
 			plant2.setK(2);
