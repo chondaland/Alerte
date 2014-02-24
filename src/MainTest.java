@@ -33,8 +33,8 @@ public class MainTest {
 			BufferedImage sortieNDVI = ImageIO.read(new File("data/test.jpg"));
 			int m=0;
 			ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
-			for(int i=0; i<100;i++){
-				for(int j=0; j<100;j++){
+			for(int i=0; i<200;i++){
+				for(int j=0; j<200;j++){
 					Color c = new Color(newImage.getRGB(i, j));
 					tableau2.add(m, new Pixel(c.getRed(), c.getBlue(), c.getBlue() , sortieNDVI.getRGB(i, j)));
 					m++;
@@ -46,8 +46,11 @@ public class MainTest {
 			Plante plant2 = new Plante(tableau2);
 			plant2.setK(2);
 			plant2.setEpsilon(0.0001);
+			//plant2.kmoyenne();
+			Pixel temoin1 = new Pixel(1,2,3,4);
+			Pixel temoin2 = new Pixel(100,100,100,100);
+			plant2.kmoyenne2(temoin1, temoin2, 2);
 			
-			plant2.kmoyenne();
 			
 			
 } catch (IOException e) {
