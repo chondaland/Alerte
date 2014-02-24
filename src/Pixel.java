@@ -87,7 +87,7 @@ public class Pixel implements Comparable{
 		return (this.NDVI-m.getNDVI())/2;  // EXEMPLE DE DISTANCE
 	}
 	
-	public int kppvPixel(int k){
+	public void kppvPixel(int k){
 		
 		//CREATION DUN ARRAYLIST baseDApprentissage QUI SERVIRA D EXEMPLE
 		
