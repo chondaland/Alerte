@@ -1,4 +1,14 @@
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.media.jai.RenderedImageAdapter;
+import javax.media.jai.PlanarImage;
+import javax.media.jai.JAI;
+
+
+
 
 
 public class MainTest {
@@ -8,6 +18,14 @@ public class MainTest {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		try {
+			PlanarImage image = new RenderedImageAdapter(ImageIO.read(new File("data/test.jpg")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		
 		
 		ArrayList<Pixel> a = new ArrayList<Pixel>(10);
 		Pixel p1 = new Pixel(1000,1100,120,120);

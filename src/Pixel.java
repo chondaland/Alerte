@@ -31,7 +31,7 @@ public class Pixel implements Comparable{
 	
 	
 	public double distance(Pixel pixel){
-		return Math.abs(this.NDVI-pixel.getNDVI());
+		return Math.abs(this.B-pixel.getB());
 	}
 	
 	public void setGroupe(int newnum){
