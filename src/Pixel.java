@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.media.jai.JAI;
+import javax.imageio.ImageIO;
 
 
 public class Pixel implements Comparable{
