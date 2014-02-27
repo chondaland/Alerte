@@ -1,5 +1,11 @@
 import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.math.*;
+
+import javax.imageio.ImageIO;
 
  class Plante {
 	
@@ -133,7 +139,7 @@ import java.math.*;
 			
 		}
 		
-		public void kmoyenne2(Pixel temoinSain, Pixel temoinMalade, int entier){
+		public Sante kmoyenne2(Pixel temoinSain, Pixel temoinMalade, int entier){
 			this.k =entier;
 			int nbPixel = plante.size();
 			ArrayList<Integer> random = new ArrayList<Integer>();
@@ -230,9 +236,10 @@ import java.math.*;
 		double d2 = H2.get(indic).getCentroide().distance(temoinMalade);
 
 		if(d1<=d2){System.out.println("Votre plante est en bonne santé");
+		return Sante.SAIN ;
 		}
 		else {System.out.println("Votre plante est malade");
-		
+		return Sante.MALADE ;
 		
 			
 		System.out.println("results");	
@@ -245,6 +252,33 @@ import java.math.*;
 			
 			
 		}
+		}
+		
+		
+		
+		public Sante getSante(String NomPhotoRVB, String NomPhotoNDVI, Pixel temoinSain, Pixel temoinMalade, int entier) throws IOException{
+			
+				BufferedImage newImage = ImageIO.read(new File(NomPhotoRVB));
+				BufferedImage sortieNDVI = ImageIO.read(new File(NomPhotoNDVI));
+						
+			
+			int m=0;
+			ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
+			for(int i=0; i<200;i++){
+				for(int j=0; j<200;j++){
+					Color c = new Color(newImage.getRGB(i, j));
+					tableau2.add(m, new Pixel(c.getRed(), c.getBlue(), c.getBlue() , sortieNDVI.getRGB(i, j)));
+					m++;
+				}
+			}
+			
+			Plante plant2 = new Plante(tableau2);
+			plant2.setK(2);
+			plant2.setEpsilon(0.0001);
+			Sante A = plant2.kmoyenne2(temoinSain, temoinMalade, 2);
+			if(A==Sante.MALADE){return Sante.MALADE;}
+			else {return Sante.SAIN ;}
+			
 		}
 		
 		

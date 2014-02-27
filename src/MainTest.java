@@ -14,19 +14,11 @@ import javax.media.jai.JAI;
 
 
 
-public class MainTest {
+public class MainTest {{
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-			PlanarImage image = new RenderedImageAdapter(ImageIO.read(new File("data/test.jpg")));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		try {
 			BufferedImage newImage = ImageIO.read(new File("data/test.jpg"));
