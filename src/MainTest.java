@@ -21,8 +21,8 @@ public class MainTest {{
 	 */
 		
 		try {
-			BufferedImage newImage = ImageIO.read(new File("data/test.jpg"));
-			BufferedImage sortieNDVI = ImageIO.read(new File("data/test.jpg"));
+			BufferedImage newImage = ImageIO.read(new File("folder/test1.jpg"));
+			BufferedImage sortieNDVI = ImageIO.read(new File("folder/test1.jpg"));
 			int m=0;
 			ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
 			for(int i=0; i<200;i++){

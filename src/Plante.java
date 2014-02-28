@@ -286,7 +286,7 @@ import javax.imageio.ImageIO;
 		public void kppvPlante(int k){
 		
 		for(int i=0;i<plante.size()-1;i++){
-			((Pixel) plante.get(i)).kppvPixel(k);    //pk faire du cast ici ?
+			((Pixel) plante.get(i)).kppvPixel(k);
 		}
 	}
  }

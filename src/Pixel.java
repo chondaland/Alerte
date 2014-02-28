@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+
 import javax.media.jai.JAI;
 import javax.imageio.ImageIO;
 
@@ -31,6 +32,11 @@ public class Pixel implements Comparable{
 		this.IR=IR;
 	}
 	
+	private ArrayList<Pixel> baseDApprentissage;
+	
+	public void setBase(ArrayList<Pixel> base){
+		this.baseDApprentissage = base;
+	}
 	
 	public double distance(Pixel pixel){
 		return Math.abs(this.B-pixel.getB());
@@ -76,46 +82,41 @@ public class Pixel implements Comparable{
 		return this.IR;
 	}
 	
-	public int compareTo(Object p){	
-		Pixel m = (Pixel) p;
-		if (this.distance<m.getDistance()) return -1; 
-		else if(this.distance == m.getDistance()) return 0; 
-		else return 1;
-	}
-	
 	public double distance1(Pixel m){
-		return (this.NDVI-m.getNDVI())/2;  // EXEMPLE DE DISTANCE
+		return Math.sqrt((this.getB()-m.getB())*(this.getB()-m.getB())+(this.getR()-m.getR())*(this.getR()-m.getR()));  //Fc distance du test 3
 	}
 	
 	public void kppvPixel(int k){
-		
-		//CREATION DUN ARRAYLIST baseDApprentissage QUI SERVIRA D EXEMPLE
-		
-		ArrayList<Pixel> baseDApprentissage = new ArrayList<Pixel>();
 			
-		//pour chaque pixel i appartenant � la base d'apprentissage (=bc de photos jor 100, 200)
-		//on calcule la distance au pixel fixe et on change l'attribut distance du pixel i
-		//base d'apprentissage = arraylist contenant tous les pixels de la base d'apprentissage
+		//Pour chaque pixel i appartenant a la base d'apprentissage, on calcule la distance au pixel fixe et on change l'attribut distance du pixel i
 					
-	for(int i=0;i<baseDApprentissage.size()-1;i++)
+	for(int i=0;i<baseDApprentissage.size();i++)
 		baseDApprentissage.get(i).setDistance(baseDApprentissage.get(i).distance(this));
 			
-		//on doit copier la base d'apprentissage d'abord (car on va trier le tableau)
+		//On doit copier la base d apprentissage d'abord car on va la trier et on ne doit jamais modifier la base d apprentissage
 			
-		ArrayList<Pixel> baseDApprentissageTest = new ArrayList<Pixel>(baseDApprentissage);
+		ArrayList<Pixel> baseDApprentissageTest = (ArrayList<Pixel>) baseDApprentissage.clone();
 			
-		//on trie les pixels de la base d'apprentissage test avec Collections.sort
+		//On trie les pixels de la base d apprentissage test avec Collections.sort
 			
-		Collections.sort(baseDApprentissageTest);		
+		Collections.sort(baseDApprentissageTest, new PixelComparator(this));
+		
+		//On considere les etiquettes des k PPV qui correspondent ici aux k premiers pixels de baseDApprentissageTest
 		
 		int p=0;
-		for(int i=0;i<k-1;i++){
-			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;   //pk du cast ici ?
-		}
-		
+		for(int i=0;i<k;i++){
+			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;    //On somme les etiquettes (1 et -1) pour connaitre l etiquette majoritaire
+	}
 		if(p>0) this.setGroupe2(1);
 		if(p<0) this.setGroupe2(-1);
-		if(p==0) this.kppvPixel(k+1);
+		if(p==0) this.kppvPixel(k+1);   // en cas d egalite, on recommence en prenant un PPV suppplementaire pour trancher
+	}
+	
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
