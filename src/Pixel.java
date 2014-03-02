@@ -87,11 +87,11 @@ public class Pixel implements Comparable{
 		return (this.NDVI-m.getNDVI())/2;  // EXEMPLE DE DISTANCE
 	}
 	
-	public int kppvPixel(int k){
+	public void kppvPixel(int k){
 		
 		//CREATION DUN ARRAYLIST baseDApprentissage QUI SERVIRA D EXEMPLE
 		
-		ArrayList baseDApprentissage = new ArrayList<Pixel>();
+		ArrayList<Pixel> baseDApprentissage = new ArrayList<Pixel>();
 			
 		//pour chaque pixel i appartenant � la base d'apprentissage (=bc de photos jor 100, 200)
 		//on calcule la distance au pixel fixe et on change l'attribut distance du pixel i

@@ -3,9 +3,16 @@ import java.util.ArrayList;
 
 public class Representants {
 	private ArrayList<Pixel> centroides;
+	private int k;
 	
-	public Representants(ArrayList<Pixel> centroides){
+	public int getk2(){
+		return this.k;
+	}
+	
+	public Representants(ArrayList<Pixel> centroides, int k){
 		this.centroides = centroides ;
+		this.k = k;
+		
 	}
 	
 	public ArrayList<Pixel> getCentroides(){
@@ -26,7 +33,7 @@ public class Representants {
 	
 	public ArrayList<Double> buildComparison(ArrayList<Pixel> A){
 		ArrayList<Double> comp= new ArrayList<Double>();
-		for(int i=0 ; i<2 ; i++ ){
+		for(int i=0 ; i<this.k ; i++ ){
 			comp.add(i, new Double(A.get(i).distance(this.centroides.get(i))));	
 			System.out.println(A.get(i).distance(this.centroides.get(i)));
 }
