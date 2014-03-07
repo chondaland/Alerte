@@ -8,14 +8,14 @@ import javax.imageio.ImageIO;
 
 public class MainTest {
 
-	public void Main(String args[]) {
+	public static void main(String args[]) {
 		/**
 		 * @param args
 		 */
 
 		try {
-			BufferedImage newImage = ImageIO.read(new File("data/test.jpg"));
-			BufferedImage sortieNDVI = ImageIO.read(new File("data/test.jpg"));
+			BufferedImage newImage = ImageIO.read(new File("data/photo"));
+			BufferedImage sortieNDVI = ImageIO.read(new File("data/photo"));
 			int m = 0;
 			ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
 			for (int i = 0; i < 200; i++) {
@@ -31,10 +31,22 @@ public class MainTest {
 			Plante plant2 = new Plante(tableau2);
 			plant2.setK(2);
 			plant2.setEpsilon(0.0001);
-			// plant2.kmoyenne();
-			Pixel temoin1 = new Pixel(1, 2, 3, 4);
-			Pixel temoin2 = new Pixel(100, 100, 100, 100);
-			plant2.kmoyenne2(temoin1, temoin2, 2);
+			//plant2.kmoyenne();
+			for(int i=0;i<plant2.getPlante().size();i++){
+			if(plant2.getPlante().get(i).getnumGroupe()==0){
+				int m2 = i%200 ;
+				int m1 = i/200;
+				//newImage.setRGB(m1,m2,255);
+				}
+			}
+			
+			//File outputfile = new File("data/imageTest2.png");
+			//System.out.println("test");
+			//ImageIO.write(newImage, "png", outputfile);
+			//System.out.println("fin");
+			//Pixel temoin1 = new Pixel(1, 2, 3, 4);
+			//Pixel temoin2 = new Pixel(100, 100, 100, 100);
+			//plant2.kmoyenne2(temoin1, temoin2, 2);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -62,11 +74,15 @@ public class MainTest {
 		a.add(p8);
 		a.add(p9);
 
-		// Plante plant=new Plante(a);
-		// plant.setK(2);
-		// plant.setEpsilon(0.0001);
+		 Plante plant=new Plante(a);
+		 plant.setK(2);
+		 plant.setEpsilon(0.0001);
 
-		// plant.kmoyenne();
+		 plant.kmoyenne();
+		
+		
+		
+		
 
 	}
 }

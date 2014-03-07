@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.media.jai.JAI;
 import javax.imageio.ImageIO;
+import java.lang.Math.*;
 
 
 public class Pixel implements Comparable{
@@ -84,7 +85,7 @@ public class Pixel implements Comparable{
 	}
 	
 	public double distance1(Pixel m){
-		return (this.NDVI-m.getNDVI())/2;  // EXEMPLE DE DISTANCE
+		return Math.sqrt((this.NDVI-m.getNDVI())*(this.NDVI-m.getNDVI())+(this.B-m.getB())*(this.B-m.getB())+(this.IR-m.getIR())*(this.IR-m.getIR())+ (this.R-m.getR())*(this.R-m.getR()));  // EXEMPLE DE DISTANCE
 	}
 	
 	public void kppvPixel(int k){
