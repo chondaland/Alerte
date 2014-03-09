@@ -83,7 +83,7 @@ public class Pixel implements Comparable{
 	}
 	
 	public double distance1(Pixel m){
-		return Math.sqrt((this.getB()-m.getB())*(this.getB()-m.getB())+(this.getR()-m.getR())*(this.getR()-m.getR()));  //Fc distance du test 3
+		return Math.abs(this.getB()-m.getB());
 	}
 	
 	public void kppvPixel(int k){
@@ -105,10 +105,17 @@ public class Pixel implements Comparable{
 		
 		int p=0;
 		for(int i=0;i<k;i++){
+			System.out.println("pixel trié "+ i +" : "+ "etiquette "+ baseDApprentissageTest.get(i).getnumGroupe2()+ ", Rouge "+ baseDApprentissageTest.get(i).getR()+ ", Bleu "+ baseDApprentissageTest.get(i).getB());
 			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;    //On somme les etiquettes (1 et -1) pour connaitre l etiquette majoritaire
 	}
-		if(p>0) this.setGroupe2(1);
-		if(p<0) this.setGroupe2(-1);
+		if(p>0) {
+			this.setGroupe2(1);
+			System.out.println("Etiquette du pixel à trier : 1");
+		}
+		if(p<0) {
+			this.setGroupe2(-1);
+			System.out.println("Etiquette du pixel à trier : -1");
+		}
 		if(p==0) this.kppvPixel(k+1);   // en cas d egalite, on recommence en prenant un PPV suppplementaire pour trancher
 	}
 	

@@ -75,13 +75,19 @@ public class MainTestKppv {
 	//Code du kPPV à adapter à cette phase de tests dans Pixel.java
 		int p=0;
 		for(int i=0;i<k;i++){
-			System.out.println("pixel trié "+ i +" : "+ "etiquette "+ baseDApprentissageTest.get(i).getnumGroupe2()+ ", Rouge "+ baseDApprentissageTest.get(i).getR());
-			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;
+			System.out.println("pixel trié "+ i +" : "+ "etiquette "+ baseDApprentissageTest.get(i).getnumGroupe2()+ ", Rouge "+ baseDApprentissageTest.get(i).getR()+ ", Bleu "+ baseDApprentissageTest.get(i).getB());
+			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;    //On somme les etiquettes (1 et -1) pour connaitre l etiquette majoritaire
+	}
+		if(p>0) {
+			this.setGroupe2(1);
+			System.out.println("Etiquette du pixel à trier : 1");
 		}
-		System.out.println("Etiquette du pixel à trier : " + p);
-		if(p>0) this.setGroupe2(1);
-		if(p<0) this.setGroupe2(-1);
-		if(p==0) this.kppvPixel(k+1);
+		if(p<0) {
+			this.setGroupe2(-1);
+			System.out.println("Etiquette du pixel à trier : -1");
+		}
+		if(p==0) this.kppvPixel(k+1);   // en cas d egalite, on recommence en prenant un PPV suppplementaire pour trancher
+	}
 		
 	//Fonction distance du kPPV à adapter à cette phase de test dans Pixel.java
 		public double distance1(Pixel m){
@@ -90,7 +96,7 @@ public class MainTestKppv {
 
 ***************************** Fin de la 1ere phase de test simple ********************************************************/
 		
-/************* 2nd série de test : image coupee en 2 deux : partie haute en rouge, partie basse en blanche ***************
+//************* 2nd série de test : image coupee en 2 deux : partie haute en rouge, partie basse en blanche ***************
 		
 		//Pour transformer l image "test2.png" situe dans folder en un ArrayList plant2
 		
@@ -98,8 +104,8 @@ public class MainTestKppv {
 		BufferedImage sortieNDVI = ImageIO.read(new File("folder/test2.png"));
 		int m = 0;
 		ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
-		for (int i = 0; i < 200; i++) {
-		for (int j = 0; j < 200; j++) {
+		for (int i = 0; i < newImage.getWidth(); i++) {
+		for (int j = 0; j < newImage.getHeight(); j++) {
 		Color c = new Color(newImage.getRGB(i, j));
 		tableau2.add(m,
 		new Pixel(c.getRed(), c.getBlue(), c.getBlue(),
@@ -118,8 +124,8 @@ public class MainTestKppv {
 				ArrayList<Pixel> baseDApprentissage = new ArrayList<Pixel>(4);
 				Pixel p1 = new Pixel(0,10,0,0);   //très rouge
 				Pixel p2 = new Pixel(0,50,0,0);   //assez rouge
-				Pixel p3 = new Pixel(0,180,0,0);  //assez blanc
-				Pixel p4 = new Pixel(0,250,0,0);  //très blanc
+				Pixel p3 = new Pixel(0,180,0,0);  //assez bleu
+				Pixel p4 = new Pixel(0,250,0,0);  //très bleu
 				
 				//Etiquetter les pixels
 				
@@ -150,12 +156,16 @@ public class MainTestKppv {
 				//Application de l algo avec k = 3
 				 
 				for(int i=0;i<plant2.getPlante().size();i++){
+					System.out.println("pixel à trier "+ i +" : "+ "Rouge "+ plant2.getPlante().get(i).getR()+ ", Bleu "+ plant2.getPlante().get(i).getB());
 					plant2.getPlante().get(i).setBase(baseDApprentissage);
 					plant2.getPlante().get(i).kppvPixel(3);
 				}		
-				
-				//On recupere en sortie une image dont les pixels d etiquette 1 sont rouge et les pixels d etiquette -1 sont blanc
-				
+	}
+}
+
+		//On recupere en sortie une image dont les pixels d etiquette 1 sont rouge et les pixels d etiquette -1 sont blanc
+/****************************************************************************************************************************************
+ 				
 				for(int i=0;i<plant2.getPlante().size();i++){
 					if(plant2.getPlante().get(i).getnumGroupe2()==1){
 						int m2 = i%200 ;
@@ -167,7 +177,22 @@ public class MainTestKppv {
 					File outputfile = new File("folder/testsortie2.png");
 					ImageIO.write(newImage, "png", outputfile);
 						
-		//Code du kPPV à adapter à cette phase de tests : code de base
+		//Code du kPPV à adapter à cette phase de tests
+		int p=0;
+		for(int i=0;i<k;i++){
+			System.out.println("pixel trié "+ i +" : "+ "etiquette "+ baseDApprentissageTest.get(i).getnumGroupe2()+ ", Rouge "+ baseDApprentissageTest.get(i).getR()+ ", Bleu "+ baseDApprentissageTest.get(i).getB());
+			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;    //On somme les etiquettes (1 et -1) pour connaitre l etiquette majoritaire
+	}
+		if(p>0) {
+			this.setGroupe2(1);
+			System.out.println("Etiquette du pixel à trier : 1");
+		}
+		if(p<0) {
+			this.setGroupe2(-1);
+			System.out.println("Etiquette du pixel à trier : -1");
+		}
+		if(p==0) this.kppvPixel(k+1);   // en cas d egalite, on recommence en prenant un PPV suppplementaire pour trancher
+	}
 		
 		//Fonction distance du kPPV à adapter à cette phase de test
 			public double distance1(Pixel m){
@@ -175,7 +200,7 @@ public class MainTestKppv {
 		}
 ****************************** Fin de la 2nde phase de test simple ***********************************************************************/
 
-//************* 3eme série de test simple : photo avec alternance de pixels rouge et bleu *************************************************
+/************* 3eme série de test simple : photo avec alternance de pixels rouge et bleu *************************************************
 
 		//Pour transformer l image "test3.png" situe dans folder en un ArrayList plant2
 		
@@ -183,8 +208,8 @@ public class MainTestKppv {
 		BufferedImage sortieNDVI = ImageIO.read(new File("folder/test3.png"));
 		int m = 0;
 		ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
-		for (int i = 0; i < 200; i++) {
-		for (int j = 0; j < 200; j++) {
+		for (int i = 0; i < newImage.getWidth(); i++) {
+		for (int j = 0; j < newImage.getHeight(); j++) {
 		Color c = new Color(newImage.getRGB(i, j));
 		tableau2.add(m,
 		new Pixel(c.getRed(), c.getBlue(), c.getBlue(),
@@ -265,7 +290,22 @@ public class MainTestKppv {
 
 
 /******************************************************************************************************************************
-	//Code du kPPV à adapter à cette phase de tests : code de base
+	//Code du kPPV à adapter à cette phase de tests
+	int p=0;
+		for(int i=0;i<k;i++){
+			System.out.println("pixel trié "+ i +" : "+ "etiquette "+ baseDApprentissageTest.get(i).getnumGroupe2()+ ", Rouge "+ baseDApprentissageTest.get(i).getR()+ ", Bleu "+ baseDApprentissageTest.get(i).getB());
+			p=((Pixel) baseDApprentissageTest.get(i)).getnumGroupe2()+p;    //On somme les etiquettes (1 et -1) pour connaitre l etiquette majoritaire
+	}
+		if(p>0) {
+			this.setGroupe2(1);
+			System.out.println("Etiquette du pixel à trier : 1");
+		}
+		if(p<0) {
+			this.setGroupe2(-1);
+			System.out.println("Etiquette du pixel à trier : -1");
+		}
+		if(p==0) this.kppvPixel(k+1);   // en cas d egalite, on recommence en prenant un PPV suppplementaire pour trancher
+	}
 
 	//Fonction distance du kPPV à adapter à cette phase de test
 		public double distance1(Pixel m){
