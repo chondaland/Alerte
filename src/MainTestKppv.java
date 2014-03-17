@@ -96,7 +96,7 @@ public class MainTestKppv {
 
 ***************************** Fin de la 1ere phase de test simple ********************************************************/
 		
-//************* 2nd série de test : image coupee en 2 deux : partie haute en rouge, partie basse en blanche ***************
+/************* 2nd série de test : image coupee en 2 deux : partie haute en rouge, partie basse en blanche ***************
 		
 		//Pour transformer l image "test2.png" situe dans folder en un ArrayList plant2
 		
@@ -160,9 +160,7 @@ public class MainTestKppv {
 					plant2.getPlante().get(i).setBase(baseDApprentissage);
 					plant2.getPlante().get(i).kppvPixel(3);
 				}		
-	}
-}
-
+				
 		//On recupere en sortie une image dont les pixels d etiquette 1 sont rouge et les pixels d etiquette -1 sont blanc
 /****************************************************************************************************************************************
  				
@@ -313,3 +311,122 @@ public class MainTestKppv {
 		}
 
 ********************************** Fin de la 3eme phase de test simple *****************************************************************/
+
+/************* 4eme série de test : photo avec alternance de pixels rouge et bleu, pixels blanc aléatoires ***************
+
+		//Pour créer l image "test4.png" dans folder
+		
+		BufferedImage image= new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+		int rouge = (200 << 16) + (0 << 8) + 0;
+		int vert = (11 << 16) + (67 << 8) + 0 ;
+		int blanc = (244 << 16) + (244 << 8) + 244 ;
+		for(int i=0 ; i<200 ; i++){
+		for(int j=0 ; j<200 ; j++){
+		if(((i+j)%2)==0){image.setRGB(i,j,rouge);
+			}
+		else {image.setRGB(i, j, 255);
+		}
+	}
+}	
+		int m1 = (int) (Math.random() * (200));
+		int m2 = (int) (Math.random() * (200));
+		System.out.println(m1);
+		System.out.println(m2);
+		image.setRGB(m1, m2, blanc);	
+		try {
+		   File fic= new File("test4.png");
+		   ImageIO.write(image, "png", fic);}
+		catch (IOException e) {
+		   e.printStackTrace();
+		}
+
+		//Pour transformer l'image test4.png en un ArrayList plant2
+		
+		BufferedImage newImage = ImageIO.read(new File("folder/test2.png"));
+		BufferedImage sortieNDVI = ImageIO.read(new File("folder/test2.png"));
+		int m = 0;
+		ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
+		for (int i = 0; i < newImage.getWidth(); i++) {
+		for (int j = 0; j < newImage.getHeight(); j++) {
+		Color c = new Color(newImage.getRGB(i, j));
+		tableau2.add(m,
+		new Pixel(c.getRed(), c.getBlue(), c.getBlue(),
+		sortieNDVI.getRGB(i, j)));
+		m++;
+	}
+}
+		
+				Plante plant2 = new Plante(tableau2);		
+		
+				//Valeur prise en compte : bleu
+				//Autres valeurs non prises en compte
+				//Plus le bleu est fort et proche de 255, plus le pixel est blanc
+				//Plus le bleu est petit et proche de 0, plus le pixel est rouge
+				
+				ArrayList<Pixel> baseDApprentissage = new ArrayList<Pixel>(4);
+				Pixel p1 = new Pixel(0,10,0,0);   //très rouge
+				Pixel p2 = new Pixel(0,50,0,0);   //assez rouge
+				Pixel p3 = new Pixel(0,180,0,0);  //assez bleu
+				Pixel p4 = new Pixel(0,250,0,0);  //très bleu
+				
+				//Etiquetter les pixels
+				
+				p1.setGroupe2(1);
+				p2.setGroupe2(1);
+				p3.setGroupe2(-1);
+				p4.setGroupe2(-1);
+				
+				//Ajouter à arraylist pour créer la base d apprentissage
+				
+				baseDApprentissage.add(p1);
+				baseDApprentissage.add(p2);
+				baseDApprentissage.add(p3);
+				baseDApprentissage.add(p4);
+				
+				//Intermédiaire d'arraylist base
+				
+				ArrayList<Pixel> base = new ArrayList<Pixel>(4);
+				base.add(p1);
+				base.add(p2);
+				base.add(p3);
+				base.add(p4);
+				
+				for(int i=0; i<plant2.getPlante().size(); i++){
+					plant2.getPlante().get(i).setBase(baseDApprentissage);
+				}
+				
+				//Application de l algo avec k = 3
+				 
+				for(int i=0;i<plant2.getPlante().size();i++){
+					System.out.println("pixel à trier "+ i +" : "+ "Rouge "+ plant2.getPlante().get(i).getR()+ ", Bleu "+ plant2.getPlante().get(i).getB());
+					plant2.getPlante().get(i).setBase(baseDApprentissage);
+					plant2.getPlante().get(i).kppvPixel(3);
+				}		
+************************************* Fin de la 4ème série de test *********************************************************************/
+		
+		
+//********************* test avec photo prise par la caméra : détermination des valeurs des pixels ***************
+
+		//Pour transformer l image "testcamera.png" situe dans folder en un ArrayList plant2
+		
+				BufferedImage newImage = ImageIO.read(new File("folder/testcamera.png"));
+				BufferedImage sortieNDVI = ImageIO.read(new File("folder/testcamera.png"));
+				int m = 0;
+				ArrayList<Pixel> tableau2 = new ArrayList<Pixel>();
+				for (int i = 0; i < newImage.getWidth(); i++) {
+				for (int j = 0; j < newImage.getHeight(); j++) {
+				Color c = new Color(newImage.getRGB(i, j));
+				tableau2.add(m,
+				new Pixel(c.getRed(), c.getBlue(), c.getBlue(),
+				sortieNDVI.getRGB(i, j)));
+				m++;
+			}
+		}
+
+				Plante plant2 = new Plante(tableau2);		
+			
+				for(int i=0;i<plant2.getPlante().size();i++){
+					System.out.println("pixel à trier "+ i +" : "+ "Rouge "+ plant2.getPlante().get(i).getR()+ ", Bleu "+ plant2.getPlante().get(i).getB()+ ", NDVI "+ plant2.getPlante().get(i).getNDVI());
+				}
+			}
+		}
